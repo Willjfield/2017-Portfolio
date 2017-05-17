@@ -33,6 +33,7 @@ gulp.task('lint', function() {
 			'keystone.js',
 			'package.json',
 			'gulpfile.js',
+			'./public/js/background.js',
 			sourceJS
 		])
 		.pipe(jshint())
@@ -54,7 +55,8 @@ gulp.task('scss', function() {
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
 	return gulp.src( [
-		// './public/js/libs/jquery/jquery.min.js',
+		'./node_modules/three/build/three.min.js',
+		'./public/js/background.js',
 		sourceJS
 	])
 		.pipe(concat('app.js'))
