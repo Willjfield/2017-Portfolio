@@ -56,6 +56,8 @@ gulp.task('scss', function() {
 gulp.task('scripts', function() {
 	return gulp.src( [
 		'./node_modules/three/build/three.min.js',
+		'./node_modules/gsap/TweenLite.js',
+		'./node_modules/gsap/CSSPlugin.js',
 		'./public/js/background.js',
 		sourceJS
 	])
@@ -72,6 +74,7 @@ var keystonePaths = {
 gulp.task('watch', function() {
 	swallow = true;
 	gulp.watch(keystonePaths.src, ['lint']);
+	gulp.watch('./public/js/background.js', ['lint', 'scripts']);
 	gulp.watch(sourceJS, ['lint', 'scripts']);
 	gulp.watch('./public/styles/site/' + '*.scss', ['scss']);
 });

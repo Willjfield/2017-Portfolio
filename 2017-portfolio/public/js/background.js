@@ -1,4 +1,4 @@
-console.log('bg js')
+console.log('background js')
 var container;
 var camera, scene, renderer;
 var uniforms;
@@ -38,7 +38,7 @@ function init() {
 
     document.onmousemove = function(e){
       uniforms.u_mouse.value.x = e.pageX
-      uniforms.u_mouse.value.y = e.pageY
+      uniforms.u_mouse.value.y = e.pageY-$(window).scrollTop();
     }
 }
 
