@@ -1,11 +1,14 @@
 {{!< default}}
 {{> shaders }}
  <div id="container"></div>
-
+<div class='bio-container'>
+	<p class='bio'>Will Field is a developer, designer, and motion graphics artist.<br><br>He creates cross-platform apps, museum installations, websites, music videos and on-air television graphics. He also teaches web development and programming to both children and adults. <br><br> He holds a Masters degree from New York University’s ITP program and a Film and Electronic Arts Bachelors Degree from Bard College. Will has worked for Microsoft Research, The American Museum of Natural History, Nickelodeon International, and Oddleg, a digital development studio based in New York City.</p>
+</div>
 {{# each data.projects }}
 	<div class='project {{ title }}'>
 		<h1 class='project-title'>{{ title }}</h1>
 		<img src="./uploads/{{ image.filename }}">
+		<div class='project-description-container'><p class='project-description'> {{{ content.brief }}} </p></div>
 	</div>
 {{/each}}
 
