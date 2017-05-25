@@ -5744,13 +5744,13 @@ $(document).ready(function(){
 
 	$('.project').on('click',function(){
 		if(!$(this).find('img').hasClass('project-active')){
-			$('.project').find('img').addClass('project-active');
+			$('.project').find('.project-img').addClass('project-active');
 			//$().find('img').removeClass('colorize');
 			$(this).find('.project-description-container').addClass('project-active');
 			$('body').css('overflow','hidden');
 		}else{
 			$('.project').find('img').removeClass('project-active');
-			$(this).find('img').removeClass('colorize');
+			$(this).find('.project-img').removeClass('colorize');
 			$(this).find('.project-description-container').removeClass('project-active');
 			$('body').css('overflow','visible');
 		}

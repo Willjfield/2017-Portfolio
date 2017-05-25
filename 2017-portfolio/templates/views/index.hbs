@@ -7,8 +7,14 @@
 {{# each data.projects }}
 	<div class='project {{ title }}'>
 		<h1 class='project-title'>{{ title }}</h1>
-		<img src="./uploads/{{ image.filename }}">
-		<div class='project-description-container'><p class='project-description'> {{{ content.brief }}} </p></div>
+		<img class='project-img' src="./uploads/{{ image.filename }}">
+		<div class='project-description-container'>
+			<img class='project-thumb' src="./uploads/{{ thumbOne.filename }}">
+			<img class='project-thumb' src="./uploads/{{ thumbTwo.filename }}">
+			<img class='project-thumb' src="./uploads/{{ thumbThree.filename }}">
+			{{!-- <p class='project-description'></p> --}}
+			{{{ content.brief }}} 
+		</div>
 	</div>
 {{/each}}
 

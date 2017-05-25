@@ -24,6 +24,9 @@ Project.add({
 	enabled: { type: Boolean},
 	order: { type: Types.Number},
 	image: { type: Types.File, storage: MediaStorage},
+	thumbOne: { type: Types.File, storage: MediaStorage},
+	thumbTwo: { type: Types.File, storage: MediaStorage},
+	thumbThree: { type: Types.File, storage: MediaStorage},
 	content: {
 		brief: { type: Types.Html, wysiwyg: true, height: 150 },
 	},
