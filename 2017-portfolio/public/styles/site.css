@@ -6,6 +6,7 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400");
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -5837,7 +5838,9 @@ button.close {
   height: auto; }
 
 body {
-  font-family: 'Open Sans', sans-serif; }
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  background: #050910; }
 
 #container {
   position: fixed;
@@ -5847,12 +5850,17 @@ body {
   height: 100%;
   z-index: -999; }
 
+.portfolio-showcase {
+  width: 100vmin;
+  margin: 0 auto; }
+
 .project {
-  width: 100%;
+  width: 49%;
   text-align: center;
-  margin: 30vmin 0; }
+  display: inline-block;
+  padding: 1%; }
   .project img {
-    width: 50%;
+    width: 100%;
     max-width: 450px;
     -webkit-filter: grayscale(100%);
     /* Safari 6.0 - 9.0 */
@@ -5860,6 +5868,11 @@ body {
     cursor: pointer; }
   .project img.colorize {
     animation: colorize .35s forwards; }
+  .project img.project-close {
+    width: 3vmin;
+    position: absolute;
+    right: 1vmin;
+    top: 1vmin; }
   .project h1.project-title {
     text-transform: uppercase;
     font-weight: 300;
@@ -5876,7 +5889,8 @@ body {
     max-width: 450px;
     padding: 3vmin 1vmin;
     pointer-events: none;
-    text-align: left; }
+    text-align: left;
+    display: inline; }
   .project h1.project-title:hover {
     z-index: -1; }
   .project .project-description-container {
@@ -5898,11 +5912,19 @@ body {
     animation: descriptionopen .35s forwards;
     z-index: 2; }
   .project img.project-thumb {
-    margin: 4% 0;
-    width: 30%; }
+    margin: 6% 0;
+    width: 29%; }
 
 div.bio-container {
-  padding: 10%; }
+  padding: 10%;
+  padding-bottom: 45vmin; }
+  div.bio-container header {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    color: #bbbbbb;
+    font-size: 4vmin; }
+  div.bio-container .sub-header {
+    color: #bbbbbb; }
   div.bio-container p.bio {
     color: white;
     font-weight: 300;
@@ -5911,17 +5933,24 @@ div.bio-container {
 img.project-active {
   animation: imageopen .35s forwards; }
 
+.chevron-container {
+  width: 100%;
+  position: absolute;
+  bottom: 2vmin;
+  text-align: center; }
+  .chevron-container .down-chevron {
+    width: 5%;
+    cursor: pointer; }
+
 @keyframes colorize {
   0% {
     -webkit-filter: grayscale(100%);
     /* Safari 6.0 - 9.0 */
-    filter: grayscale(100%);
-    box-shadow: none; }
+    filter: grayscale(100%); }
   100% {
     -webkit-filter: grayscale(0%);
     /* Safari 6.0 - 9.0 */
-    filter: grayscale(0%);
-    box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.1); } }
+    filter: grayscale(0%); } }
 
 @keyframes imageopen {
   0% {

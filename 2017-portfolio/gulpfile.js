@@ -58,6 +58,7 @@ gulp.task('scripts', function() {
 		'./node_modules/three/build/three.min.js',
 		'./node_modules/gsap/TweenLite.js',
 		'./node_modules/gsap/CSSPlugin.js',
+		'./node_modules/gsap/ScrollToPlugin.js',
 		'./public/js/background.js',
 		sourceJS
 	])

@@ -5657,6 +5657,193 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 	}
 }("CSSPlugin"));
 
+/*!
+ * VERSION: 1.8.1
+ * DATE: 2017-01-17
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2017, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ **/
+var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(global) !== "undefined") ? global : this || window; //helps ensure compatibility with AMD/RequireJS and CommonJS/Node
+(_gsScope._gsQueue || (_gsScope._gsQueue = [])).push( function() {
+
+	"use strict";
+
+	var _doc = document.documentElement,
+		_window = _gsScope,
+		_max = function(element, axis) {
+			var dim = (axis === "x") ? "Width" : "Height",
+				scroll = "scroll" + dim,
+				client = "client" + dim,
+				body = document.body;
+			return (element === _window || element === _doc || element === body) ? Math.max(_doc[scroll], body[scroll]) - (_window["inner" + dim] || _doc[client] || body[client]) : element[scroll] - element["offset" + dim];
+		},
+		_unwrapElement = function(value) {
+			if (typeof(value) === "string") {
+				value = TweenLite.selector(value);
+			}
+			if (value.length && value !== _window && value[0] && value[0].style && !value.nodeType) {
+				value = value[0];
+			}
+			return (value === _window || (value.nodeType && value.style)) ? value : null;
+		},
+		_buildGetter = function(e, axis) { //pass in an element and an axis ("x" or "y") and it'll return a getter function for the scroll position of that element (like scrollTop or scrollLeft, although if the element is the window, it'll use the pageXOffset/pageYOffset or the documentElement's scrollTop/scrollLeft or document.body's. Basically this streamlines things and makes a very fast getter across browsers.
+			var p = "scroll" + ((axis === "x") ? "Left" : "Top");
+			if (e === _window) {
+				if (e.pageXOffset != null) {
+					p = "page" + axis.toUpperCase() + "Offset";
+				} else if (_doc[p] != null) {
+					e = _doc;
+				} else {
+					e = document.body;
+				}
+			}
+			return function() {
+				return e[p];
+			};
+		},
+		_getOffset = function(element, container) {
+			var rect = _unwrapElement(element).getBoundingClientRect(),
+				isRoot = (!container || container === _window || container === document.body),
+				cRect = (isRoot ? _doc : container).getBoundingClientRect(),
+				offsets = {x: rect.left - cRect.left, y: rect.top - cRect.top};
+			if (!isRoot && container) { //only add the current scroll position if it's not the window/body.
+				offsets.x += _buildGetter(container, "x")();
+				offsets.y += _buildGetter(container, "y")();
+			}
+			return offsets;
+		},
+		_parseVal = function(value, target, axis) {
+			var type = typeof(value);
+			if (type === "number" || (type === "string" && value.charAt(1) === "=")) {
+				return value;
+			} else if (value === "max") {
+				return _max(target, axis);
+			}
+			return Math.min(_max(target, axis), _getOffset(value, target)[axis]);
+		},
+
+		ScrollToPlugin = _gsScope._gsDefine.plugin({
+			propName: "scrollTo",
+			API: 2,
+			global: true,
+			version:"1.8.1",
+
+			//called when the tween renders for the first time. This is where initial values should be recorded and any setup routines should run.
+			init: function(target, value, tween) {
+				this._wdw = (target === _window);
+				this._target = target;
+				this._tween = tween;
+				if (typeof(value) !== "object") {
+					value = {y:value}; //if we don't receive an object as the parameter, assume the user intends "y".
+					if (typeof(value.y) === "string" && value.y !== "max" && value.y.charAt(1) !== "=") {
+						value.x = value.y;
+					}
+				} else if (value.nodeType) {
+					value = {y:value, x:value};
+				}
+				this.vars = value;
+				this._autoKill = (value.autoKill !== false);
+				this.getX = _buildGetter(target, "x");
+				this.getY = _buildGetter(target, "y");
+				this.x = this.xPrev = this.getX();
+				this.y = this.yPrev = this.getY();
+				if (value.x != null) {
+					this._addTween(this, "x", this.x, _parseVal(value.x, target, "x") - (value.offsetX || 0), "scrollTo_x", true);
+					this._overwriteProps.push("scrollTo_x");
+				} else {
+					this.skipX = true;
+				}
+				if (value.y != null) {
+					this._addTween(this, "y", this.y, _parseVal(value.y, target, "y") - (value.offsetY || 0), "scrollTo_y", true);
+					this._overwriteProps.push("scrollTo_y");
+				} else {
+					this.skipY = true;
+				}
+				return true;
+			},
+
+			//called each time the values should be updated, and the ratio gets passed as the only parameter (typically it's a value between 0 and 1, but it can exceed those when using an ease like Elastic.easeOut or Back.easeOut, etc.)
+			set: function(v) {
+				this._super.setRatio.call(this, v);
+
+				var x = (this._wdw || !this.skipX) ? this.getX() : this.xPrev,
+					y = (this._wdw || !this.skipY) ? this.getY() : this.yPrev,
+					yDif = y - this.yPrev,
+					xDif = x - this.xPrev,
+					threshold = ScrollToPlugin.autoKillThreshold;
+
+				if (this.x < 0) { //can't scroll to a position less than 0! Might happen if someone uses a Back.easeOut or Elastic.easeOut when scrolling back to the top of the page (for example)
+					this.x = 0;
+				}
+				if (this.y < 0) {
+					this.y = 0;
+				}
+				if (this._autoKill) {
+					//note: iOS has a bug that throws off the scroll by several pixels, so we need to check if it's within 7 pixels of the previous one that we set instead of just looking for an exact match.
+					if (!this.skipX && (xDif > threshold || xDif < -threshold) && x < _max(this._target, "x")) {
+						this.skipX = true; //if the user scrolls separately, we should stop tweening!
+					}
+					if (!this.skipY && (yDif > threshold || yDif < -threshold) && y < _max(this._target, "y")) {
+						this.skipY = true; //if the user scrolls separately, we should stop tweening!
+					}
+					if (this.skipX && this.skipY) {
+						this._tween.kill();
+						if (this.vars.onAutoKill) {
+							this.vars.onAutoKill.apply(this.vars.onAutoKillScope || this._tween, this.vars.onAutoKillParams || []);
+						}
+					}
+				}
+				if (this._wdw) {
+					_window.scrollTo((!this.skipX) ? this.x : x, (!this.skipY) ? this.y : y);
+				} else {
+					if (!this.skipY) {
+						this._target.scrollTop = this.y;
+					}
+					if (!this.skipX) {
+						this._target.scrollLeft = this.x;
+					}
+				}
+				this.xPrev = this.x;
+				this.yPrev = this.y;
+			}
+
+		}),
+		p = ScrollToPlugin.prototype;
+
+	ScrollToPlugin.max = _max;
+	ScrollToPlugin.getOffset = _getOffset;
+	ScrollToPlugin.autoKillThreshold = 7;
+
+	p._kill = function(lookup) {
+		if (lookup.scrollTo_x) {
+			this.skipX = true;
+		}
+		if (lookup.scrollTo_y) {
+			this.skipY = true;
+		}
+		return this._super._kill.call(this, lookup);
+	};
+
+}); if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); }
+
+//export to AMD/RequireJS and CommonJS/Node (precursor to full modular build system coming at a later date)
+(function(name) {
+	"use strict";
+	var getGlobal = function() {
+		return (_gsScope.GreenSockGlobals || _gsScope)[name];
+	};
+	if (typeof(define) === "function" && define.amd) { //AMD
+		define(["./TweenLite"], getGlobal);
+	} else if (typeof(module) !== "undefined" && module.exports) { //node
+		require("./TweenLite.js");
+		module.exports = getGlobal();
+	}
+}("ScrollToPlugin"));
 console.log('background js')
 var container;
 var camera, scene, renderer;
@@ -5716,14 +5903,16 @@ function render() {
     uniforms.u_time.value += 0.05;
     renderer.render( scene, camera );
 }
+var lastScrollTop=0;
+
 $(document).ready(function(){
 	console.log('portfolio.js');
 	//Run Three.js background stuff
-	init();
-	animate();
+	// init();
+	// animate();
 
 	//Handle the project thumbs
-	$('.project img').mouseenter(function(event) {
+	$('.project .project-img').mouseenter(function(event) {
 		if(!$(this).hasClass('project-active')){
 			$(this).addClass('colorize');
 			// TweenLite.to($(this).parent().find('h1.project-title'), .3, {opacity:0, onComplete:function(){
@@ -5733,7 +5922,7 @@ $(document).ready(function(){
 		}
 	});
 
-	$('.project img').mouseleave(function(event) {
+	$('.project .project-img').mouseleave(function(event) {
 		if(!$(this).hasClass('project-active')){
 			$(this).removeClass('colorize');
 			// TweenLite.to($(this).parent().find('h1.project-title'), .3, {opacity:1, onComplete:function(){
@@ -5742,19 +5931,25 @@ $(document).ready(function(){
 		}
 	});
 
-	$('.project').on('click',function(){
-		if(!$(this).find('img').hasClass('project-active')){
+	$('.project').on('click',function(e){
+		console.log(e.target)
+		if(!$(e.target).hasClass('project-close') && !$(this).find('img').hasClass('project-active')){
 			$('.project').find('.project-img').addClass('project-active');
 			//$().find('img').removeClass('colorize');
 			$(this).find('.project-description-container').addClass('project-active');
 			$('body').css('overflow','hidden');
-		}else{
+		}		
+	});
+
+	$('.project-close').on('click',function(){
 			$('.project').find('img').removeClass('project-active');
-			$(this).find('.project-img').removeClass('colorize');
-			$(this).find('.project-description-container').removeClass('project-active');
+			$(this).parent().parent().find('.project-img').removeClass('colorize');
+			$(this).parent().parent().find('.project-description-container').removeClass('project-active');
 			$('body').css('overflow','visible');
-		}
-		
+	});
+
+	$('.down-chevron').on('click',function(){
+		TweenLite.to(window,.5,{scrollTo:lastScrollTop+$(window).outerHeight()})
 	});
 
 	sizeElements();
@@ -5765,15 +5960,27 @@ $(window).resize(function(){
 	sizeElements();
 });
 
-var lastScroll=0;
+
 $(window).scroll(function(e){
-	uniforms.u_time.value += ($(window).scrollTop()-lastScroll)*.02;
-	lastScroll = $(window).scrollTop();
+	//uniforms.u_time.value += ($(window).scrollTop()-lastScroll)*.02;
+	var st = $(this).scrollTop();
+	if(st < lastScrollTop) {
+        console.log('up 1');
+    }
+    else {
+        console.log('down 1');
+    }
+    lastScrollTop = st;
+    if(st>0){
+    	TweenLite.to($('.down-chevron'),.25,{opacity:0});
+    }else{
+    	TweenLite.to($('.down-chevron'),.25,{opacity:1});
+    }
 })
 
 function sizeElements(){
 	$('h1.project-title').each(function(index, el) {
-		$(el).css('top',$(el).innerHeight());
+		//$(el).css('top',$(el).innerHeight());
 	});
 }
 

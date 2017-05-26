@@ -2,21 +2,30 @@
 {{> shaders }}
  <div id="container"></div>
 <div class='bio-container'>
-	<p class='bio'>Will Field is a developer, designer, and motion graphics artist.<br><br>He creates cross-platform apps, museum installations, websites, music videos and on-air television graphics. He also teaches web development and programming to both children and adults. <br><br> He holds a Masters degree from New York University’s ITP program and a Film and Electronic Arts Bachelors Degree from Bard College. Will has worked for Microsoft Research, The American Museum of Natural History, Nickelodeon International, and Oddleg, a digital development studio based in New York City.</p>
+	<header class='top-header'>Will J. Field</header>
+	<span class='sub-header'>Developer | Designer | Motion Graphics Artist</span>
+	<p class='bio'><br><br>Will creates cross-platform apps, museum installations, websites, music videos and on-air television graphics. He also teaches web development and programming to children and adults. <br><br> He holds a Masters degree from New York University’s ITP program and a Film and Electronic Arts Bachelors Degree from Bard College. Will has worked for Microsoft Research, The American Museum of Natural History, Nickelodeon International, and Oddleg, a digital development studio based in New York City.</p>
 </div>
-{{# each data.projects }}
-	<div class='project {{ title }}'>
-		<h1 class='project-title'>{{ title }}</h1>
-		<img class='project-img' src="./uploads/{{ image.filename }}">
-		<div class='project-description-container'>
-			<img class='project-thumb' src="./uploads/{{ thumbOne.filename }}">
-			<img class='project-thumb' src="./uploads/{{ thumbTwo.filename }}">
-			<img class='project-thumb' src="./uploads/{{ thumbThree.filename }}">
-			{{!-- <p class='project-description'></p> --}}
-			{{{ content.brief }}} 
-		</div>
-	</div>
-{{/each}}
 
+<div class='chevron-container'>
+	<img class='down-chevron' src="./images/chevron.svg"></img>
+</div>
+
+<div class='portfolio-showcase'>
+	{{# each data.projects }}
+		<div class='project {{ title }}'>
+			{{!-- <h1 class='project-title'>{{ title }}</h1> --}}
+			<img class='project-img' src="./uploads/{{ image.filename }}">
+			<div class='project-description-container'>
+				<img class='project-close' src="./images/close-btn.png">
+				<img class='project-thumb' src="./uploads/{{ thumbOne.filename }}">
+				<img class='project-thumb' src="./uploads/{{ thumbTwo.filename }}">
+				<img class='project-thumb' src="./uploads/{{ thumbThree.filename }}">
+				{{!-- <p class='project-description'></p> --}}
+				{{{ content.brief }}} 
+			</div>
+		</div>
+	{{/each}}
+</div>
 
 
