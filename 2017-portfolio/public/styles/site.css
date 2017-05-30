@@ -5,7 +5,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,700,800");
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400");
 html {
   font-family: sans-serif;
@@ -5854,6 +5854,16 @@ body {
   width: 100vmin;
   margin: 0 auto; }
 
+.projects-title {
+  font-family: 'Open Sans';
+  color: white;
+  font-weight: 100;
+  font-size: 10vmin;
+  text-align: center; }
+
+.blog-list {
+  padding: 0 5%; }
+
 .project {
   width: 49%;
   text-align: center;
@@ -5902,7 +5912,8 @@ body {
     width: 50%;
     height: 50%;
     opacity: 0;
-    z-index: -2; }
+    z-index: -2;
+    overflow: scroll; }
     .project .project-description-container p {
       margin: 0 0 10px;
       padding: 0 4%;

@@ -59,18 +59,22 @@ $(window).resize(function(){
 $(window).scroll(function(e){
 	//uniforms.u_time.value += ($(window).scrollTop()-lastScroll)*.02;
 	var st = $(this).scrollTop();
-	if(st < lastScrollTop) {
-        console.log('up 1');
-    }
-    else {
-        console.log('down 1');
-    }
+	if(st < lastScrollTop) {} else {
+		if(!TweenMax.isTweening(window)){
+			$('body').css('overflow','hidden');
+			TweenLite.to(window,1,{scrollTo:st+$(window).innerHeight(),onComplete:function(){
+				$('body').css('overflow','scroll');
+			}});
+		}
+		//return;
+	}
     lastScrollTop = st;
     if(st>0){
     	TweenLite.to($('.down-chevron'),.25,{opacity:0});
     }else{
     	TweenLite.to($('.down-chevron'),.25,{opacity:1});
     }
+
 })
 
 function sizeElements(){
