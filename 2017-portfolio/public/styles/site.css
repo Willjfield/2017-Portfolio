@@ -5869,8 +5869,15 @@ body {
   .blog-summaries p {
     color: white;
     padding-left: 30vmin; }
+  .blog-summaries h3 {
+    float: right;
+    width: 75%;
+    padding: 3%; }
   .blog-summaries img {
-    margin-bottom: 10vmin; }
+    border-radius: 50%;
+    margin-bottom: 10vmin;
+    float: right;
+    width: 20vmin; }
 
 article {
   color: white; }

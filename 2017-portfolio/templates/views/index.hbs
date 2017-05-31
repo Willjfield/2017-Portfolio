@@ -35,9 +35,9 @@
 	<div class="col-md-8 blog-list">
 	{{# each data.posts.results}}
 	<div class="blog-summaries" data-ks-editable="{{#if ../user}}{{adminEditableUrl ../../user _id}}{{/if}}" class="post">
-		<h3><a href="{{slug}}">{{{title}}}</a></h3>
-		{{#if image}}<img src="{{{cloudinaryUrl image width=160 height=160 crop='fit' }}}" class="img pull-left">{{/if}}
-		<p>{{{content.brief}}}</p>
+		<h3><a href="{{slug}}">{{{title}}}</h3>
+		{{#if image}}<img src="{{{cloudinaryUrl image width=160 height=160 crop='fit' }}}" class="img">{{/if}}</a>
+		{{!-- <p>{{{content.brief}}}</p> --}}
 		{{#if content.extended}}<p class="read-more"><a href="{{postUrl slug}}">Read more...</a></p>{{/if}}
 	</div>
 	{{/each}}
