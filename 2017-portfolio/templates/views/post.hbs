@@ -7,7 +7,7 @@
 				<header>
 					<h1>{{data.post.title}}</h1>
 				</header>
-				{{#if data.post.content.shaders}}{{{data.post.content.shaders}}}{{/if}}
+				{{#if data.post.video}}<video loop="true" autoplay="true" src="./uploads/{{ data.post.video.filename }}"></video>{{/if}}
 				<div class="post">
 					{{!-- {{#if data.post.image}}<img src="{{{cloudinaryUrl data.post.image width=250 crop='fit' }}}" class="img-responsive">{{/if}} --}}
 					{{{data.post.content.main}}}

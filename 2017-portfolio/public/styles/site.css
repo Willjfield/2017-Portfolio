@@ -5864,6 +5864,23 @@ body {
 .blog-list {
   padding: 0 5%; }
 
+.blog-summaries {
+  clear: both; }
+  .blog-summaries p {
+    color: white;
+    padding-left: 30vmin; }
+  .blog-summaries img {
+    margin-bottom: 10vmin; }
+
+article {
+  color: white; }
+  article video {
+    width: 75%;
+    margin: 10vmin; }
+
+.row {
+  margin-top: 20vmin; }
+
 .project {
   width: 49%;
   text-align: center;

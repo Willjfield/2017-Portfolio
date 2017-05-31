@@ -11,18 +11,24 @@ var Post = new keystone.List('Post', {
 	autokey: { path: 'slug', from: 'title', unique: true },
 });
 
+var MediaStorage = new keystone.Storage({
+  adapter: keystone.Storage.Adapters.FS,
+  fs: {
+    path: keystone.expandPath('./public/uploads'),
+    publicPath: '/public/uploads',
+  },
+});
+
 Post.add({
 	title: { type: String, required: true },
 	state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
 	author: { type: Types.Relationship, ref: 'User', index: true },
 	publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
 	image: { type: Types.CloudinaryImage },
+	video: { type: Types.File, storage: MediaStorage},
 	content: {
 		brief: { type: Types.Html, wysiwyg: true, height: 150 },
-		main: { type: Types.Html, wysiwyg: false, height: 400 },
-		libraries: { type: Types.Html, wysiwyg: false, height: 400 },
-		shaders: { type: Types.Html, wysiwyg: false, height: 400 },
-		scripts: { type: Types.Html, wysiwyg: false, height: 400 },
+		main: { type: Types.Html, wysiwyg: true, height: 400 },
 	},
 	categories: { type: Types.Relationship, ref: 'PostCategory', many: true },
 });

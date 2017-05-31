@@ -59,12 +59,36 @@ body{
 	padding: 0 5%;
 }
 
+.blog-summaries{
+	clear: both;
+	p{
+		color: white;
+		padding-left: 30vmin;
+	}
+
+	img{
+		margin-bottom: 10vmin;
+	}
+}
+
+article{
+	color: white;
+	video{
+		width: 75%;
+		margin: 10vmin;
+	}
+}
+
+.row{
+	margin-top: 20vmin;
+}
+
 .project{
     width: 49%;
     text-align: center;
     display: inline-block;
    	padding: 1%; 
-    
+
     img{
     	width: 100%;
     	max-width: 450px;
