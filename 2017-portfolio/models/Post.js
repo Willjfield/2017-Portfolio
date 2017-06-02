@@ -24,7 +24,7 @@ Post.add({
 	state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
 	author: { type: Types.Relationship, ref: 'User', index: true },
 	publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
-	image: { type: Types.File, storage: MediaStorage },
+	image: { type: Types.CloudinaryImage },
 	video: { type: Types.File, storage: MediaStorage},
 	content: {
 		brief: { type: Types.Html, wysiwyg: true, height: 150 },
