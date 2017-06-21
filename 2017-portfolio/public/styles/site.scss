@@ -26,7 +26,7 @@
 body{
 	font-family: 'Roboto', sans-serif;
 	font-weight: 300;
-	background: #050910;
+	background: white;
 }
 
 //DESKTOP
@@ -42,14 +42,14 @@ body{
 }
 
 .portfolio-showcase{
-        width: 100vmin;
-    	margin: 0 auto;
-    }
+    width: 100vmin;
+	margin: 0 auto;
+}
 
 
 .projects-title{
 	font-family: 'Open Sans';
-	color: white;
+	color: black;
     font-weight: 100;
     font-size: 10vmin;
     text-align: center;
@@ -62,7 +62,7 @@ body{
 .blog-summaries{
 	clear: both;
 	p{
-		color: white;
+		color: black;
 		padding-left: 30vmin;
 	}
 
@@ -70,6 +70,10 @@ body{
 		float: right;
 		width: 75%;
 		padding: 3%;
+		a{
+		color: black;
+		}
+		
 	}
 	img{
 		border-radius: 50%;
@@ -84,6 +88,9 @@ article{
 	video{
 		width: 75%;
 		margin: 10vmin;
+	}
+	p a{
+		color: black;
 	}
 }
 
@@ -141,6 +148,7 @@ article{
 
     .project-description-container{
         background: white;
+        border: 6px solid black;
 	    position: fixed;
 	    margin: 0 auto;
 	    top: 25%;
@@ -172,19 +180,20 @@ article{
 div.bio-container{
 	padding: 10%;
 	padding-bottom: 45vmin;
+
 	header{
 		font-family: 'Open Sans', sans-serif;
 		font-weight: 600;
-	    color: #bbbbbb;
+	    color: black;
 	    font-size: 4vmin;
 	}
 
 	.sub-header{
-		color: #bbbbbb;
+		color: black;
 	}
 
 	p.bio{
-		color: white;
+		color: black;
 	    font-weight: 300;
 	    width: 80%;
 	}

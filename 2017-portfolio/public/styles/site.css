@@ -5840,7 +5840,7 @@ button.close {
 body {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
-  background: #050910; }
+  background: white; }
 
 #container {
   position: fixed;
@@ -5856,7 +5856,7 @@ body {
 
 .projects-title {
   font-family: 'Open Sans';
-  color: white;
+  color: black;
   font-weight: 100;
   font-size: 10vmin;
   text-align: center; }
@@ -5867,12 +5867,14 @@ body {
 .blog-summaries {
   clear: both; }
   .blog-summaries p {
-    color: white;
+    color: black;
     padding-left: 30vmin; }
   .blog-summaries h3 {
     float: right;
     width: 75%;
     padding: 3%; }
+    .blog-summaries h3 a {
+      color: black; }
   .blog-summaries img {
     border-radius: 50%;
     margin-bottom: 10vmin;
@@ -5884,6 +5886,8 @@ article {
   article video {
     width: 75%;
     margin: 10vmin; }
+  article p a {
+    color: black; }
 
 .row {
   margin-top: 20vmin; }
@@ -5929,6 +5933,7 @@ article {
     z-index: -1; }
   .project .project-description-container {
     background: white;
+    border: 6px solid black;
     position: fixed;
     margin: 0 auto;
     top: 25%;
@@ -5956,12 +5961,12 @@ div.bio-container {
   div.bio-container header {
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
-    color: #bbbbbb;
+    color: black;
     font-size: 4vmin; }
   div.bio-container .sub-header {
-    color: #bbbbbb; }
+    color: black; }
   div.bio-container p.bio {
-    color: white;
+    color: black;
     font-weight: 300;
     width: 80%; }
 
