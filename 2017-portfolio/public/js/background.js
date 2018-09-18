@@ -1,4 +1,4 @@
-console.log('background js')
+console.log('background js');
 var container;
 var camera, scene, renderer;
 var uniforms;
@@ -37,9 +37,9 @@ function init() {
     window.addEventListener( 'resize', onWindowResize, false );
 
     document.onmousemove = function(e){
-      uniforms.u_mouse.value.x = e.pageX
+      uniforms.u_mouse.value.x = e.pageX;
       uniforms.u_mouse.value.y = e.pageY-$(window).scrollTop();
-    }
+    };
 }
 
 function onWindowResize( event ) {

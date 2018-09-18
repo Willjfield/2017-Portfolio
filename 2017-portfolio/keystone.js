@@ -27,7 +27,8 @@ keystone.init({
 		helpers: new require('./templates/views/helpers')(),
 		extname: '.hbs',
 	}).engine,
-
+	'cookie secret': process.env.COOKIE_SECRET,
+	'cloudinary config': { cloud_name: 'dbhgh5p0t', api_key: process.env.API_KEY, api_secret: process.env.API_SECRET},
 	'auto update': true,
 	'session': true,
 	'auth': true,

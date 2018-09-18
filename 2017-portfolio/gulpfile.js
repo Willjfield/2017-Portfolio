@@ -56,6 +56,7 @@ gulp.task('scss', function() {
 gulp.task('scripts', function() {
 	return gulp.src( [
 		'./node_modules/three/build/three.min.js',
+
 		'./node_modules/gsap/TweenLite.js',
 		'./node_modules/gsap/TweenMax.js',
 		'./node_modules/gsap/CSSPlugin.js',

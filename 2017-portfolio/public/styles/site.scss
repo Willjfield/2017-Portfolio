@@ -157,17 +157,24 @@ article{
 		height: 50%;
 		opacity: 0;
 		z-index: -2;
-		overflow: scroll;
+		overflow: auto;
+
 		p{		
 		    margin: 0 0 10px;
 		    padding: 0 4%;
 		    font-size: 3vmin;
 		    text-align: justify;
 		}
+
+		.project-thumb{
+			filter: none;
+			clip: rect(0px,0px,500px,500px);
+		}
     }
 
     .project-description-container.project-active{
     	animation: descriptionopen .35s forwards;
+
     	z-index: 2;
     }
 
