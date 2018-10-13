@@ -5957,6 +5957,9 @@ article {
   .project img.project-thumb {
     margin: 6% 0;
     width: 29%; }
+  .project .centered-video {
+    margin: 0 auto;
+    width: 100%; }
 
 div.bio-container {
   padding: 10%;

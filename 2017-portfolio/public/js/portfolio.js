@@ -23,13 +23,15 @@ $(document).ready(function(){
 		}
 	});
 
+	var projectOpen = false;
 	$('.project').on('click',function(e){
-		console.log(e.target);
+		//console.log(e.target);
 		if(!$(e.target).hasClass('project-close') && !$(this).find('img').hasClass('project-active')){
 			$('.project').find('.project-img').addClass('project-active');
 			//$().find('img').removeClass('colorize');
 			$(this).find('.project-description-container').addClass('project-active');
 			$('body').css('overflow','hidden');
+			projectOpen = true;
 		}		
 	});
 
@@ -38,6 +40,21 @@ $(document).ready(function(){
 			$(this).parent().parent().find('.project-img').removeClass('colorize');
 			$(this).parent().parent().find('.project-description-container').removeClass('project-active');
 			$('body').css('overflow','visible');
+			projectOpen = false;
+	});
+
+	$(document).click(function(e) {
+		console.log($(e.target));
+		if(projectOpen && !$(e.target).hasClass('project-active')){
+			console.log("close!");
+			
+			$('.project-description-container.project-active').parent().parent().find('.project-img').removeClass('colorize');
+			$('.project-description-container.project-active').parent().parent().find('.project-description-container').removeClass('project-active');
+			$('body').css('overflow','visible');
+			$('.project').find('img').removeClass('project-active');
+			projectOpen = false;
+		}
+			
 	});
 
 	$('.down-chevron').on('click',function(){
